@@ -81,10 +81,20 @@ public class ClubRepository {
 
     private final String GET_ALL_RESET_PASSWORD_REQUESTS = "SELECT * FROM reset_password_requests";
 
+    private final String RESET_FEATURED_CLUBS = "DELETE FROM featured_clubs";
+
+    private final String ADD_FEATURED_CLUB = "INSERT INTO featured_clubs VALUES (?, ?, ?)";
     private final JdbcTemplate jdbcTemplate;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public int pushFeaturedClub(Club club) {
+        return jdbcTemplate.update(ADD_FEATURED_CLUB, club.getClubID(), club.getDescription(), club.getProfilePictureUrl());
+    }
+
+    public int clearFeaturedClubs() {
+        return jdbcTemplate.update(RESET_FEATURED_CLUBS);
+    }
     @Autowired
     public ClubRepository(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jdbcTemplate = jdbcTemplate;
