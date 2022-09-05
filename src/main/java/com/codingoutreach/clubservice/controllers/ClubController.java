@@ -7,6 +7,7 @@ import com.codingoutreach.clubservice.dos.FeaturedClubInformationDO;
 import com.codingoutreach.clubservice.models.*;
 import com.codingoutreach.clubservice.repository.DTO.Club;
 import com.codingoutreach.clubservice.dos.ClubInformation;
+import com.codingoutreach.clubservice.repository.DTO.FeaturedClubInformation;
 import com.codingoutreach.clubservice.security.JWTUtil;
 import com.codingoutreach.clubservice.service.ClubService;
 import javassist.NotFoundException;
@@ -63,6 +64,12 @@ public class ClubController {
     @RequestMapping(path="/featured")
     public List<FeaturedClubInformationDO> getFeaturedClubs() {
         return clubService.getFeaturedClubs();
+    }
+    @CrossOrigin
+    @PostMapping
+    @RequestMapping(path="/featured/edit/[clubId]")
+    public List<FeaturedClubInformation> editFeaturedClubs(@PathVariable("clubId") UUID clubId) {
+        return clubService.editFeaturedClubs(clubId);
     }
 
     @CrossOrigin

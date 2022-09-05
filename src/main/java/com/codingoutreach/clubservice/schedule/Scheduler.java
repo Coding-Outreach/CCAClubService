@@ -28,6 +28,7 @@ public class Scheduler {
         Collections.shuffle(allClubs);
         for (int i = 0; i < Math.min(allClubs.size(), 3); i++) {
             clubRepository.pushFeaturedClub(allClubs.get(i));
+            clubRepository.getFeaturedClubs();
         }
     }
     @Scheduled(cron="0 0 8 * * *")
