@@ -45,6 +45,11 @@ public class ClubService {
         this.clubRepository = clubRepository;
     }
 
+    public List<FeaturedClubInformation> editFeaturedClubs(UUID clubID) {
+        Club g = clubRepository.getClubByClubId(clubID);
+        clubRepository.pushFeaturedClub(g);
+        return clubRepository.getFeaturedClubs();
+    }
 
     public List<ClubInformation> getAllClubs() {
         List<Club> club = clubRepository.getAllClubs();
