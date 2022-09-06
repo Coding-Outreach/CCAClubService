@@ -88,8 +88,8 @@ public class ClubRepository {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public int pushFeaturedClub(Club club) {
-        return jdbcTemplate.update(ADD_FEATURED_CLUB, club.getClubID(), club.getDescription(), club.getProfilePictureUrl());
+    public int pushFeaturedClub(UUID clubId, String description, String profilePictureURL) {
+        return jdbcTemplate.update(ADD_FEATURED_CLUB, clubId, description, profilePictureURL);
     }
 
     public int clearFeaturedClubs() {

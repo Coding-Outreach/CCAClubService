@@ -27,7 +27,7 @@ public class Scheduler {
         List<Club> allClubs = clubRepository.getAllClubs();
         Collections.shuffle(allClubs);
         for (int i = 0; i < Math.min(allClubs.size(), 3); i++) {
-            clubRepository.pushFeaturedClub(allClubs.get(i));
+            clubRepository.pushFeaturedClub(allClubs.get(i).getClubID(), allClubs.get(i).getDescription(), allClubs.get(i).getProfilePictureUrl());
             clubRepository.getFeaturedClubs();
         }
     }

@@ -47,7 +47,7 @@ public class ClubService {
 
     public List<FeaturedClubInformation> editFeaturedClubs(UUID clubID) {
         Club g = clubRepository.getClubByClubId(clubID);
-        clubRepository.pushFeaturedClub(g);
+        clubRepository.pushFeaturedClub(g.getClubID(), g.getDescription(), g.getProfilePictureUrl());
         return clubRepository.getFeaturedClubs();
     }
 
@@ -154,8 +154,27 @@ public class ClubService {
         List<FeaturedClubInformation> repoList = clubRepository.getFeaturedClubs();
         List<FeaturedClubInformationDO> toReturn = new ArrayList<FeaturedClubInformationDO>();
         for(FeaturedClubInformation info : repoList) {
+
+            String base64Image = null;
+
+            if(info.getMediaURL() != null) {
+                String path = "./src/main/resources/static/" + info.getMediaURL();
+                //Read file from path as base64
+                byte[] imageBytes = null;
+                try {
+                    imageBytes = Files.readAllBytes(java.nio.file.Paths.get(path));
+                    base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    String imageType = "image/" + info.getMediaURL().split("\\.")[1];
+                    base64Image = "data:" + imageType + ";base64," + base64Image;
+                } catch (IOException e) {
+                    System.out.println("Profile Picture Image Not Found");
+                }
+            }
+
+
             String clubName = clubRepository.getClubByClubId(info.getClubId()).getName();
-            toReturn.add(new FeaturedClubInformationDO(info.getClubId(), clubName, info.getDescription(), info.getMediaURL()));
+            toReturn.add(new FeaturedClubInformationDO(info.getClubId(), clubName, info.getDescription(), base64Image));
         }
         return toReturn;
     }
