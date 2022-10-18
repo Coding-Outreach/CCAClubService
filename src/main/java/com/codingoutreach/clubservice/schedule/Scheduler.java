@@ -21,7 +21,7 @@ public class Scheduler {
     }
 
 
-    @Scheduled(cron = "0 0 * * 0")
+    @Scheduled(cron = "0 0 0 ? * SUN")
     public void weeklyRandomizer() {
         clubRepository.clearFeaturedClubs();
         List<Club> allClubs = clubRepository.getAllClubs();
